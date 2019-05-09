@@ -1,4 +1,6 @@
 import socket
+
+
 from _thread import *
 import sys
 
@@ -11,29 +13,54 @@ import sys
 #accept() blokuje i czeka na połączenie przychodzące. Gdy klient się łączy, zwraca nowy obiekt gniazda reprezentujący połączenie i
 # krotkę zawierającą adres klienta. Krotka będzie zawierać (host, port)
 
-server = ""
+server = "10.68.18.84"
 
 port = 5555 # Port to listen on (non-privileged ports are > 1023)
 
 
-socekt=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 try:
-    socket.bind((server, port))
-except socket.error as e:
+    s.bind((server, port))
+except s.error as e:
     #str() convert number into the string
     str(e)
 
 
-socket.listen(2) #two people
+s.listen(2) #two people
 print("Waiting for connection")
 
-
+#conn.recv(). This reads whatever data
+# the client sends and echoes it back using conn.sendall().
 def threaded_client(conn):
-    pass
+    conn.send(str.encode("Connected"))
+    reply = " "
+    while True:
+        try:
+            data=conn.recv(2048)
+            reply=data.decode("utf-8")
+
+            if not data:
+                print("Disconnected")
+                break
+            else:
+                print("Received ", reply)
+                print("Sending ", reply)
+
+            conn.sendall(str.encode(reply))
+
+        except:
+            break
+
+    print("Lost connection")
+    conn.close()
+
+#encode() method, you can convert unicoded strings into
+# any encodings supported by Python. By default, Python uses utf-8 encoding.
+
 
 while True:
-    conn, addr = socket.accept()
+    conn, addr = s.accept()
     print("Connected with: ", addr)
 
-    start_new_thread(threaded_client, conn)
+    start_new_thread(threaded_client, (conn,))
