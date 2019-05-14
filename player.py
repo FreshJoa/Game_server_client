@@ -10,8 +10,8 @@ class Player():
         self.rect = (x, y, width, height)
         self.val = 3
 
-    def draw(self, window):
-        pygame.draw.rect(window , self.color, self.rect)
+    def draw(self, win):
+        pygame.draw.rect(win, self.color, self.rect)
 
     def move(self):
         keys = pygame.key.get_pressed()  # get the state of all keyboard buttons
