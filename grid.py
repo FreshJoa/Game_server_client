@@ -12,4 +12,4 @@ class Grid:
 
     def draw_grid(self, window):
         for line in self.grid_lines:
-            pygame.draw.line(window, (200, 200, 2000), line[0], line[1], 2)
+            pygame.draw.line(window, (200, 200, 200), line[0], line[1], 2)
