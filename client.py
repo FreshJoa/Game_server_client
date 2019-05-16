@@ -2,6 +2,7 @@ import pygame
 from network import Network
 import pickle
 from grid import Grid
+from player import  Player
 
 pygame.font.init()
 
@@ -85,8 +86,9 @@ def main():
     run = True
     clock = pygame.time.Clock()
     n = Network()
-    player = int(n.getP())
-    print("You are player", player)
+    player = Player(int(n.getP()))
+    player.set_symbol()
+    print("You are player  ", player.get_symbol())
 
     while run:
         clock.tick(60)
@@ -98,7 +100,7 @@ def main():
             break
 
         if game.bothWent():
-            redrawWindow(win, game, player)
+            redrawWindow(win, game, player.get_number())
             pygame.time.delay(500)
             try:
                 game = n.send("reset")
@@ -136,7 +138,7 @@ def main():
                 #             if not game.p2Went:
                 #                 n.send(btn.text)
 
-        redrawWindow(win, game, player)
+        redrawWindow(win, game, player.get_number())
 
 def menu_screen():
     run = True
