@@ -35,6 +35,9 @@ print("Waiting for connection")
 
 players=[Player(600, 600, 'X'),Player(600, 600, 'O')]
 
+
+
+
 #conn.recv(). This reads whatever data
 # the client sends and echoes it back using conn.sendall().
 def threaded_client(conn, player):

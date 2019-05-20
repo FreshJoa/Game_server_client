@@ -1,6 +1,8 @@
 import pygame
 
 import os
+pygame.font.init()
+font = pygame.font.SysFont("comicsans", 60)
 
 letterX = pygame.image.load(os.path.join('cross_git.png'))
 letterO = pygame.image.load(os.path.join('circle_git.png'))
@@ -43,12 +45,15 @@ class Player():
         #pos = pygame.mouse.get_pos()
         self.set_cell_value(pos[0] // 200, pos[1] // 200)
 
+
     def finish(self):
+        count=0
         for y in range(len(self.grid)):
             for x in range(len(self.grid[y])):
                 if not self.get_cell_value(x, y):
-                    return False
-        return True
+                    count=count+1
+
+        return count == 4
 
 
 
@@ -65,6 +70,10 @@ class Player():
                 return True
         else:
             return False
+
+    def communicat(self, window):
+        text = font.render("You can't move here", 1, (255, 0, 0), True)
+        window.blit(text, (self.widtth / 2 - text.get_width() / 2, self.height / 2 - text.get_height() / 2))
 
 
 
